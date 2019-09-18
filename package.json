@@ -1,0 +1,22 @@
+{
+  "name": "nerus_logger",
+  "version": "1.0.0",
+  "description": "Log module for node application",
+  "main": "logger.ts",
+  "author": "Matheus Duarte",
+  "license": "MIT",
+  "dependencies": {
+    "dotenv": "^8.1.0",
+    "knex": "^0.19.4",
+    "moment": "^2.24.0",
+    "node": "^12.10.0",
+    "typescript": "^3.6.3"
+  },
+  "devDependencies": {
+    "@types/knex": "^0.16.1",
+    "@types/node": "^12.7.5"
+  },
+  "scripts": {
+    "build": "tsc --build"
+  }
+}
