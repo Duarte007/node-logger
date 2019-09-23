@@ -47,6 +47,7 @@ class Logger{
     private buildDataLog = (dataLog:DataLog, levelLog:string):LogNerusApi => {
         let {res, result, status, query, report} = dataLog; 
         let infoLog = {};
+        let endpoint = "";
         infoLog={date: moment().format('DD/MM/YYYY HH:mm:ss')};
         if(res){
             let { originalUrl } = res.req;
@@ -55,12 +56,13 @@ class Logger{
                 method: res.req.method,
                 endpoint: originalUrl
             };
+            endpoint = originalUrl;
             infoLog = {...infoLog, ...infoApi};
         }
 
         if(result){
             const response = {
-                response: JSON.stringify(result)
+                response: (typeof result == 'object' && result.hasOwnProperty('stack')) ? result.toString() : JSON.stringify(result)
             };
             infoLog = {...infoLog, ...response};
         }
@@ -80,9 +82,19 @@ class Logger{
             infoLog = {...infoLog, ...fullReport};
         }
 
+        if(endpoint !== ""){
+            const data = {
+                lvlLog: levelLog,
+                log: JSON.stringify(infoLog),
+                endpoint
+            };
+
+            return data;
+        }
+
         const data = {
             lvlLog: levelLog,
-            log: JSON.stringify(infoLog)
+            log: JSON.stringify(infoLog),
         };
 
         return data;
