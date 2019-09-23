@@ -1,6 +1,6 @@
 {
-  "name": "nerus_logger",
-  "version": "1.0.0",
+  "name": "node_logger",
+  "version": "1.0.1",
   "description": "Log module for node application",
   "main": "logger.ts",
   "author": "Matheus Duarte",
