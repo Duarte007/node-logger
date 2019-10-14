@@ -1,6 +1,6 @@
-export interface LogNerusApi{
+export interface LogNerusApi {
   lvlLog: string,
-  log: string,
+  log: string | object,
   endpoint?:string
 }
   
@@ -10,4 +10,4 @@ export interface DataLog {
   status?: number;
   query?: string;
   report?: string | object;
-} 
+}
