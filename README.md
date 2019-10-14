@@ -4,16 +4,16 @@ Node Logger is a Nodejs library for make log of your application.
 
 ## Installation
 
-Use npm to install foobar.
+Use npm to install full-log-node.
 
 ```bash
-npm install levellognode
+npm install full-log-node
 ```
 
 ## Usage
 
 ```node
-const Logger = require('levellognode')
+const Logger = require('full-log-node')
 const Log = new Logger('log_table_name')
 
 Log.info({ res, result: 'Success!', status: 200 }, Log.REGISTER_IN_DB);

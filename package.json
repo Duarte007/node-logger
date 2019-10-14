@@ -1,6 +1,6 @@
 {
-  "name": "levellognode",
-  "version": "1.0.1",
+  "name": "full-log-node",
+  "version": "1.0.0",
   "description": "Log module for node application",
   "main": "logger.ts",
   "author": "Matheus Duarte",
