@@ -121,10 +121,10 @@ class Logger {
   public async saveLogInDataBase(data: LogNerusApi, tableName: string) {
     await knexLOG(tableName)
       .insert(data)
-      .then(success => {
+      .then((success:any) => {
         console.log(this.GREEN, `[${success}] Log salvo com sucesso!`);
       })
-      .catch(error => {
+      .catch((error:any) => {
         console.log(this.RED, '\n [ERRO] Error ao salvar log. \n');
         console.log(error);
       });
