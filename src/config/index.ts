@@ -1,5 +1,6 @@
 const config = {
     levelLog: process.env.LVL_LOG ? process.env.LVL_LOG : 'ALL',
+    timezone: process.env.TIMEZONE ? process.env.TIMEZONE : 'America/Sao_Paulo',
     log_database: {
       host: process.env.DB_HOST_LOG ? process.env.DB_HOST_LOG : '',
       port: process.env.DB_PORT_LOG ? process.env.DB_PORT_LOG : '',

@@ -1,7 +1,7 @@
 import config from '../config';
 import { knexLOG } from '../config/database';
 import { LogNerusApi, DataLog } from '../interfaces';
-import moment from 'moment';
+import moment from 'moment-timezone';
 
 class Logger {
   public readonly ERROR_LOG = 'ERROR';
@@ -54,7 +54,7 @@ class Logger {
     let { res, result, status, query, report } = dataLog;
     let infoLog = {};
     let endpoint = '';
-    infoLog = { date: moment().format('DD/MM/YYYY HH:mm:ss') };
+    infoLog = { date: moment().tz(config.timezone).format('DD/MM/YYYY HH:mm:ss') };
     if (res) {
       let { originalUrl } = res.req;
       const infoApi = {
