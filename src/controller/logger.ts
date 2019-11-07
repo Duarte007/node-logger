@@ -122,7 +122,7 @@ class Logger {
     await knexLOG(tableName)
       .insert(data)
       .then((success:any) => {
-        console.log(this.GREEN, `[${success}] Log salvo com sucesso!`);
+        console.log(this.GREEN, `[${success}] Log salvo com sucesso no banco ${config.log_database.name}!`);
       })
       .catch((error:any) => {
         console.log(this.RED, '\n [ERRO] Error ao salvar log. \n');
