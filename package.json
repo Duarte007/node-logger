@@ -1,8 +1,8 @@
 {
   "name": "full-log-node",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Log module for node application",
-  "main": "logger.ts",
+  "main": "logger.js",
   "author": "Matheus Duarte",
   "license": "MIT",
   "dependencies": {
