@@ -1,3 +1,5 @@
-const Logger = require('./controller/logger');
+import Logger from './controller/logger';
+const Log = new Logger('lognerusapi');
 
-module.exports = Logger;
+console.log(Log);
+export default Logger;
