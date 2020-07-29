@@ -1,6 +1,6 @@
 {
   "name": "full-log-node",
-  "version": "1.0.9",
+  "version": "1.0.11",
   "description": "Log module for node application",
   "main": "index.js",
   "author": "Matheus Duarte",
