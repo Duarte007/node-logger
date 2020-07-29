@@ -37,10 +37,14 @@ class Logger {
   }
 
   public async info(dataLog: DataLog, registerIn: number = this.REGISTER_IN_DB) {
-    if (this.INFO_LOG === config.levelLog || config.levelLog === 'FULL') {
-      const data = this.buildDataLog(dataLog, this.INFO_LOG);
-      await this.registerLog(registerIn, data);
-    }
+    try{
+      if (this.INFO_LOG === config.levelLog || config.levelLog === 'FULL') {
+        const data = this.buildDataLog(dataLog, this.INFO_LOG);
+        await this.registerLog(registerIn, data);
+      }
+    } catch (err) {
+      console.log(err);
+    } 
   }
 
   public async debug(dataLog: DataLog, registerIn: number = this.REGISTER_IN_DB) {
@@ -51,10 +55,12 @@ class Logger {
   }
 
   private buildDataLog = (dataLog: DataLog, levelLog: string): LogNerusApi => {
-    let { res, result, status, query, report } = dataLog;
+    let { res, result, status, query, report, endpointApi, version } = dataLog;
     let infoLog = {};
     let endpoint = '';
-    infoLog = { date: moment().tz(config.timezone).format('DD/MM/YYYY HH:mm:ss') };
+    const currentDate = moment().tz('America/Sao_Paulo').format('DD/MM/YYYY HH:mm:ss');
+    const currentDateTS = moment().tz('America/Sao_Paulo').format('YYYY-MM-DD HH:mm:ss');
+    infoLog = { date: currentDate };
     if (res) {
       let { originalUrl } = res.req;
       const infoApi = {
@@ -64,8 +70,17 @@ class Logger {
       };
       endpoint = originalUrl;
       infoLog = { ...infoLog, ...infoApi };
+    } else if (endpointApi){
+      endpoint = endpointApi;
     }
 
+    if (report) {
+      const fullReport = {
+        report: report
+      };
+      infoLog = { ...infoLog, ...fullReport };
+    }
+    
     if (result) {
       const response = {
         response:
@@ -82,49 +97,50 @@ class Logger {
       infoLog = { ...infoLog, query };
     }
 
-    if (report) {
-      const fullReport = {
-        report: report
-      };
-      infoLog = { ...infoLog, ...fullReport };
-    }
-
     if (endpoint !== '') {
       const data = {
-        lvlLog: levelLog,
+        lvl_log: levelLog,
         log: infoLog,
-        endpoint
+        endpoint,
+        api_version: "1",
+        date: currentDateTS,
       };
 
       return data;
     }
 
     const data = {
-      lvlLog: levelLog,
-      log: infoLog
+      lvl_log: levelLog,
+      log: infoLog,
+      api_version: "1",
+      date: currentDateTS,
     };
 
     return data;
   };
 
   public async registerLog(registerIn: number, data: LogNerusApi) {
-    if (registerIn === 0) {
-      await this.saveLogInDataBase(this.stringifyData(data), this.tableName);
-    } else if (registerIn === 1) {
-      this.saveLogInConsole(data);
-    } else {
-      this.saveLogInConsole(data);
-      await this.saveLogInDataBase(this.stringifyData(data), this.tableName);
+    try{
+      if (registerIn === 0) {
+        await this.saveLogInDataBase(this.stringifyData(data), this.tableName);
+      } else if (registerIn === 1) {
+        this.saveLogInConsole(data);
+      } else {
+        this.saveLogInConsole(data);
+        await this.saveLogInDataBase(this.stringifyData(data), this.tableName);
+      }
+    } catch (error) {
+      return Promise.reject({ message: "Erro ao salvar log!" });
     }
   }
 
   public async saveLogInDataBase(data: LogNerusApi, tableName: string) {
     await knexLOG(tableName)
       .insert(data)
-      .then((success:any) => {
+      .then(success => {
         console.log(this.GREEN, `[${success}] Log salvo com sucesso no banco ${config.log_database.name}!`);
       })
-      .catch((error:any) => {
+      .catch(error => {
         console.log(this.RED, '\n [ERRO] Error ao salvar log. \n');
         console.log(error);
       });

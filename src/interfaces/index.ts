@@ -1,7 +1,9 @@
 export interface LogNerusApi {
-  lvlLog: string,
+  lvl_log: string,
   log: string | object,
-  endpoint?:string
+  endpoint?: string,
+  api_version: string,
+  date: string,
 }
   
 export interface DataLog {
@@ -10,4 +12,6 @@ export interface DataLog {
   status?: number;
   query?: string;
   report?: string | object;
+  version?: string;
+  endpointApi?: string;
 }
