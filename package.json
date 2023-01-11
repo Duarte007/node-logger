@@ -8,7 +8,7 @@
   "dependencies": {
     "@types/moment-timezone": "^0.5.12",
     "dotenv": "^8.1.0",
-    "knex": "^0.19.4",
+    "knex": "^2.4.0",
     "moment": "^2.24.0",
     "moment-timezone": "^0.5.26",
     "mysql": "^2.17.1",
